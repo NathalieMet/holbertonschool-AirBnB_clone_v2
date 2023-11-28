@@ -136,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
             key, value = param.split('=')
 
             if key not in HBNBCommand.types:
-                return
+                break
 
         # Process the value based on its syntax
             if value.startswith('"') and value.endswith('"'):
