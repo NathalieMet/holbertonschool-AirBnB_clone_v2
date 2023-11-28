@@ -120,18 +120,16 @@ class HBNBCommand(cmd.Cmd):
             return
 
         # Split the arguments into class name and parameters
-        args_list = args.split()
+        args_list = args.split(" ")
         class_name = args_list[0]
 
         if class_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
 
-        params = args_list[1:]
-
         # Process parameters and build a dictionary
         params_dict = {}
-        for param in params:
+        for param in args_list[1:]:
             # Split key-value pairs
             key, value = param.split('=')
 
@@ -141,13 +139,16 @@ class HBNBCommand(cmd.Cmd):
         # Process the value based on its syntax
             if value.startswith('"') and value.endswith('"'):
                 # String value
-                value = value[1:-1].replace('_', ' ').replace('\\"', '"')
+                value = value[1:-1].replace('\\"', '"').replace('_', ' ')
             elif '.' in value:
                 # Float value
                 value = float(value)
             else:
                 # Integer value
-                value = int(value)
+                try:
+                    value = int(value)
+                except ValueError:
+                    continue
 
             # Add the key-value pair to the dictionary
             params_dict[key] = value
@@ -155,7 +156,6 @@ class HBNBCommand(cmd.Cmd):
         new_instance = HBNBCommand.classes[class_name](**params_dict)
         storage.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
