@@ -24,7 +24,7 @@ class DBStorage:
 
         if env == 'test':
             from models.base_model import Base
-            Base.metadata.drop_all(self.__engine)
+            Base.metadata.drop_all(bind=self.__engine)
 
         self.__session = scoped_session(sessionmaker(bind=self.__engine,
                                                       expire_on_commit=False))
@@ -37,19 +37,25 @@ class DBStorage:
         from models.city import City
         from models.amenity import Amenity
         from models.review import Review
-
+        tables = {
+            'users': User,
+            'places': Place,
+            'states': State,
+            'cities': City,
+            'amenities': Amenity,
+            'reviews': Review
+        }
         objects = {}
 
-        if cls:
-            query_result = self.__session.query(cls).all()
+        if cls is None:
+             for classes in tables.values():
+                for row in self.__session.query(classes).all():
+                    objects['{}.{}'
+                             .format(classes.__name__, row.id)] = row
         else:
-            query_result = []
-            for model_cls in [User, State, City, Amenity, Place, Review]:
-                query_result.extend(self.__session.query(model_cls).all())
+            for row in self.__session.query(cls):
+                objects['{}.{}'.format(cls.__name__, row.id)] = row
 
-        for obj in query_result:
-            key = "{}.{}".format(obj.__class__.__name__, obj.id)
-            objects[key] = obj
         return objects
 
     def new(self, obj):
@@ -67,7 +73,14 @@ class DBStorage:
 
     def reload(self):
         """Create all tables and the current database session"""
+        from models.state import State
+        from models.city import City
         from models.base_model import Base
         Base.metadata.create_all(bind=self.__engine)
-        Session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
+        Session = scoped_session(sessionmaker(bind=self.__engine,
+                                              expire_on_commit=False))
         self.__session = Session()
+
+    def close(self):
+        """Close the session"""
+        self.__session.close()
