@@ -114,46 +114,27 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, args):
         """ Create an object of any class"""
-        if not args:
+        pline = args.split()
+        if pline == []:
             print("** class name missing **")
             return
-
-        # Split the arguments into class name and parameters
-        args_list = args.split()
-        class_name = args_list[0]
-
-        if class_name not in HBNBCommand.classes:
+        elif pline[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-
-        # Process parameters and build a dictionary
-        params_dict = {}
-        for param in args_list[1:]:
-            # Split key-value pairs
-            key, value = param.split('=')
-
-            if key not in HBNBCommand.types:
-                break
-
-        # Process the value based on its syntax
-            if value.startswith('"') and value.endswith('"'):
-                # String value
-                value = value[1:-1].replace('\\"', '"').replace('_', ' ')
-            elif '.' in value:
-                # Float value
-                value = float(value)
-            else:
-                # Integer value
-                try:
-                    value = int(value)
-                except ValueError:
-                    continue
-
-            # Add the key-value pair to the dictionary
-            params_dict[key] = value
-
-        new_instance = HBNBCommand.classes[class_name](**params_dict)
-        storage.save()
+        new_instance = HBNBCommand.classes[pline[0]]()
+        for i in range(1, len(pline)):
+            try:
+                s = pline[i].split("=")
+                if s[1][0] == '"':
+                    s[1] = s[1].replace("_", " ")
+                    setattr(new_instance, s[0], s[1][1:-1])
+                elif "." in s[1]:
+                    setattr(new_instance, s[0], float(s[1]))
+                else:
+                    setattr(new_instance, s[0], int(s[1]))
+            except Exception:
+                continue
+        new_instance.save()
         print(new_instance.id)
 
     def help_create(self):
@@ -236,14 +217,14 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
-        print(str(print_list).replace('"', ''))
+        print(print_list)
 
     def help_all(self):
         """ Help information for the all command """
