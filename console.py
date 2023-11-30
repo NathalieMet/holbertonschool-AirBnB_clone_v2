@@ -119,7 +119,7 @@ class HBNBCommand(cmd.Cmd):
             return
 
         # Split the arguments into class name and parameters
-        args_list = args.split(" ")
+        args_list = args.split()
         class_name = args_list[0]
 
         if class_name not in HBNBCommand.classes:
@@ -236,14 +236,14 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
-                if k.split('.')[0] == args:
+            for k, v in storage.all().items():
+                if k.split(".")[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
-        print(print_list)
+        print(str(print_list).replace('"', ''))
 
     def help_all(self):
         """ Help information for the all command """
