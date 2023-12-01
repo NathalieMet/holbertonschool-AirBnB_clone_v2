@@ -31,14 +31,14 @@ class Place(BaseModel, Base):
     latitude = Column(Float, nullable=True)
     longitude = Column(Float, nullable=True)
     amenity_ids = []
-    amenities = relationship("amenities", secondary=place_amenity,
-                             viewonly=False)
+    """amenities = relationship("amenities", secondary=place_amenity,
+                             viewonly=False)"""
 
 
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         reviews = relationship("Review", backref='place', cascade="all")
-        amenities = relationship("amenities", secondary=place_amenity,
-                             viewonly=False)
+        """amenities = relationship("amenities", secondary=place_amenity,
+                             viewonly=False)"""
     else:
         @property
         def reviews(self):
@@ -48,18 +48,18 @@ class Place(BaseModel, Base):
             return [review for review in storage.all(Review).values()
                 if review.place_id == self.id]
 
-        @property
-        def amenities(self):
-            """Getter attribute that returns the list of amenities instances
+        """@property
+        def amenities(self):"""
+        """Getter attribute that returns the list of amenities instances
               with place_id equals to the current Place.id"""
-            from models import storage
+        """from models import storage
             return [amenity for amenity in storage.all(Review).values()
-                if amenity.place_id == self.id]
+                if amenity.place_id == self.id]"""
 
-        @amenities.setter
+        """@amenities.setter
         def amenities(self, amenity):
         # Setter attribute that handles appending Amenity IDs
         # Accepts only Amenity objects, appends their IDs to amenity_ids
             if isinstance(amenity, amenity):
-                self.amenity_ids.append(amenity.id)
+                self.amenity_ids.append(amenity.id)"""
 

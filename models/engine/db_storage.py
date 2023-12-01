@@ -38,7 +38,7 @@ class DBStorage:
         from models.user import User
         from models.place import Place
         from models.review import Review
-        from models.amenity import Amenity
+        """from models.amenity import Amenity"""
 
 
         tables = {
@@ -47,7 +47,6 @@ class DBStorage:
             'users': User,
             'places': Place,
             'reviews': Review,
-            'amenities': Amenity
         }
         objects = {}
 
