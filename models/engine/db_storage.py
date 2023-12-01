@@ -22,7 +22,7 @@ class DBStorage:
                            .format(user, passwd, host, db),
                            pool_pre_ping=True)
 
-        if env == 'test':
+        if env == "test":
             from models.base_model import Base
             Base.metadata.drop_all(bind=self.__engine)
 
@@ -31,19 +31,16 @@ class DBStorage:
 
     def all(self, cls=None):
         """com"""
-        from models.user import User
-        from models.place import Place
+
+
         from models.state import State
         from models.city import City
-        from models.amenity import Amenity
-        from models.review import Review
+
+
         tables = {
-            'users': User,
-            'places': Place,
             'states': State,
             'cities': City,
-            'amenities': Amenity,
-            'reviews': Review
+
         }
         objects = {}
 
@@ -75,7 +72,11 @@ class DBStorage:
         """Create all tables and the current database session"""
         from models.state import State
         from models.city import City
+        from models.user import User
+        from models.state import State
+        from models.place import Place
         from models.base_model import Base
+
         Base.metadata.create_all(bind=self.__engine)
         Session = scoped_session(sessionmaker(bind=self.__engine,
                                               expire_on_commit=False))
