@@ -38,6 +38,7 @@ class DBStorage:
         from models.user import User
         from models.place import Place
         from models.review import Review
+        from models.amenity import Amenity
 
 
         tables = {
@@ -45,8 +46,8 @@ class DBStorage:
             'cities': City,
             'users': User,
             'places': Place,
-            'reviews': Review
-
+            'reviews': Review,
+            'amenities': Amenity
         }
         objects = {}
 
@@ -81,6 +82,7 @@ class DBStorage:
         from models.user import User
         from models.state import State
         from models.place import Place
+        from models.amenity import Amenity
         from models.base_model import Base
 
         Base.metadata.create_all(bind=self.__engine)
