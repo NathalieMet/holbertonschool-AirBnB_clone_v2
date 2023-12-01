@@ -38,6 +38,8 @@ class DBStorage:
         from models.user import User
         from models.place import Place
         from models.review import Review
+        from models.amenity import Amenity
+        from models.place import Place
         """from models.amenity import Amenity"""
 
 
@@ -47,6 +49,8 @@ class DBStorage:
             'users': User,
             'places': Place,
             'reviews': Review,
+            'amenities': Amenity,
+            'places': Place
         }
         objects = {}
 
