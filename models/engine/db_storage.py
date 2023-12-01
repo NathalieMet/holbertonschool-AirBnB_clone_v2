@@ -36,12 +36,14 @@ class DBStorage:
         from models.state import State
         from models.city import City
         from models.user import User
+        from models.place import Place
 
 
         tables = {
             'states': State,
             'cities': City,
-            'users': User
+            'users': User,
+            'places': Place
 
         }
         objects = {}

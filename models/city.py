@@ -15,14 +15,3 @@ class City(BaseModel, Base):
 
     places = relationship(
         "Place", backref="city", cascade="all, delete-orphan")
-"""class City(BaseModel, Base):
-
-
-    __tablename__ = 'cities'
-
-    name = Column(String(128), nullable=False)
-    state_id = Column(String(60), ForeignKey('states.id', ondelete="CASCADE"),
-                      nullable=False)
-
-    places = relationship(
-        "Place", backref="city", cascade="all")"""
