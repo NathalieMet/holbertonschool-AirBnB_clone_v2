@@ -4,6 +4,7 @@ from flask import Flask, render_template
 from markupsafe import escape
 from models.state import State
 from models.city import City
+from models.amenity import Amenity
 
 
 app = Flask(__name__)
@@ -38,8 +39,9 @@ def state_by_id(id):
 
 @app.route("/hbnb_filters", strict_slashes=False)
 def hbnb_filters():
-    return render_template('10-hbnb_filters.html')
-
+    states = storage.all(State)
+    amenities = storage.all(Amenity)
+    return render_template('10-hbnb_filters.html', states=states, amenities = amenities)
 
 @app.teardown_appcontext
 def teardown_appcontext(exception):
