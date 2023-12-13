@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Test delete feature
+""" return Hello HBNB
 """
 from flask import Flask
 
