@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" return Hello HBNB
+""" return HBNB
 """
 from flask import Flask
 
@@ -14,7 +14,7 @@ def hello_hbnb():
 
 @app.route("/hbnb", strict_slashes=False)
 def hbnb():
-    """ HBNB """
+    """ return HBNB """
     return "HBNB"
 
 
