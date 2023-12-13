@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" return HBNB
+""" display “C ” followed by the value of the text variable
 """
 from flask import Flask
 from markupsafe import escape
