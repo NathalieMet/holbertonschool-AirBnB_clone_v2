@@ -14,25 +14,23 @@ class DBStorage:
         """com"""
         user = getenv('HBNB_MYSQL_USER')
         passwd = getenv('HBNB_MYSQL_PWD')
-        host = getenv('HBNB_MYSQL_HOST', 'localhost')  # Default to 'localhost' if not set
+        host = getenv('HBNB_MYSQL_HOST', 'localhost')
         db = getenv('HBNB_MYSQL_DB')
         env = getenv('HBNB_ENV')
 
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                           .format(user, passwd, host, db),
-                           pool_pre_ping=True)
+        self.__engine = create_engine(
+            'mysql+mysqldb://{}:{}@{}/{}'.format(user, passwd, host, db),
+            pool_pre_ping=True)
 
         if env == "test":
             from models.base_model import Base
             Base.metadata.drop_all(bind=self.__engine)
 
-        self.__session = scoped_session(sessionmaker(bind=self.__engine,
-                                                      expire_on_commit=False))
+        self.__session = scoped_session(
+            sessionmaker(bind=self.__engine, expire_on_commit=False))
 
     def all(self, cls=None):
         """com"""
-
-
         from models.state import State
         from models.city import City
         from models.user import User
@@ -41,8 +39,6 @@ class DBStorage:
         from models.amenity import Amenity
         from models.place import Place
         """from models.amenity import Amenity"""
-
-
         tables = {
             'states': State,
             'cities': City,
@@ -55,10 +51,10 @@ class DBStorage:
         objects = {}
 
         if cls is None:
-             for classes in tables.values():
+            for classes in tables.values():
                 for row in self.__session.query(classes).all():
                     objects['{}.{}'
-                             .format(classes.__name__, row.id)] = row
+                            .format(classes.__name__, row.id)] = row
         else:
             for row in self.__session.query(cls):
                 objects['{}.{}'.format(cls.__name__, row.id)] = row
