@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>HBNB</title>
-</head>
-<body>
+<HEAD>
+    <TITLE>HBNB</TITLE>
+</HEAD>
+<BODY>
 	{% if states is defined %}
 	<H1>States</H1>
-	<ul>
+	<UL>
 		{% for state in states %}
-			<li><b>{{ state.id }}:</b> <B>{{ state.name }}</B></li>
+			<LI>{{ state.id }}: <B>{{ state.name }}</B></LI>
 		{% endfor %}
-	</ul>
+    </UL>
 	{% elif state %}
-            <h1>State: {{ state.name }}</h1>
-            <h3>Cities:</h3>
-            <ul>
+            <H1>State: {{ state.name }}</H1>
+            <H3>Cities:</H3>
+            <UL>
                 {% for city in state.cities | sort(attribute='name') %}
-                    <li><b>{{ city.id }}:</b> <B>{{ city.name }}</B></li>
+                    <LI>{{ city.id }}: <B>{{ city.name }}</B></LI>
                 {% endfor %}
-            </ul>
+            </UL>
 
         {% else %}
-            <h1>Not found!</h1>
+            <H1>Not found!</H1>
         {% endif %}
-</body>
-</html>
+        </BODY>
+    </HTML>
