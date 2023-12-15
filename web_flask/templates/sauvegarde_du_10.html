@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html lang="EN" dir="ltr">
+<html lang="en">
 	<head>
-		<meta charset="utf-8">
 		<title>AirBnB clone</title>
-		<link rel="icon" href="images/icon.png">
+
+		<link rel="shortcut icon" href="images/icon.ico" >
+
 		<link rel="stylesheet" href="../static/styles/4-common.css"/>
 		<link rel="stylesheet" href="../static/styles/3-header.css"/>
 		<link rel="stylesheet" href="../static/styles/3-footer.css"/>
 		<link rel="stylesheet" href="../static/styles/6-filters.css"/>
-
 	</head>
-	<body>
+    <body>
 		<header>
-			<div class="logo"></div>
+			<div id="header_logo"></div>
 		</header>
 		<div class="container">
 			<section class="filters">
+				<button>Search</button>
 				<div class="locations">
 					<h3>States</h3>
 					<h4>&nbsp;</h4>
@@ -45,7 +46,7 @@
 						{% endfor %}
 					</ul>
 				</div>
-				<button>Search</button>
+
 			</section>
 		</div>
 		<footer>
